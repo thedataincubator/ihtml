@@ -8,7 +8,7 @@ import json
 @magics_class
 class IHtmlMagics(Magics):
 
-    var_re = re.compile(r'%%(\w+)(\|\w+)?%%')
+    var_re = re.compile(r'{{\s*(\w+)\s*(?:\|\s*(\w+)\s*)?}}')
     
     def __init__(self, shell):
         super(IHtmlMagics, self).__init__(shell)
@@ -16,16 +16,16 @@ class IHtmlMagics(Magics):
         self.css = {}
 
     def var_replace(self, match):
-        if match.group(2) == '|jsdoc':
+        if match.group(2) == 'jsdoc':
             return "<script>%s</script>" % self.js.get(match.group(1), '')
-        if match.group(2) == '|cssdoc':
+        if match.group(2) == 'cssdoc':
             return "<style>%s</style>" % self.css.get(match.group(1), '')
         
         if match.group(1) not in self.shell.user_ns:
             return match.group(0)
 
         val = self.shell.user_ns[match.group(1)]
-        if match.group(2) == '|json':
+        if match.group(2) == 'json':
             try:
                 return json.dumps(val)
             except TypeError as e:
