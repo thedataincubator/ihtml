@@ -16,22 +16,23 @@ class IHtmlMagics(Magics):
         self.css = {}
 
     def var_replace(self, match):
-        if match.group(2) == 'jsdoc':
-            return "<script>%s</script>" % self.js.get(match.group(1), '')
-        if match.group(2) == 'cssdoc':
-            return "<style>%s</style>" % self.css.get(match.group(1), '')
+        as_json = (match.group(2) == 'json')
+        if not match.group(2) or as_json:
+            if match.group(1) in self.shell.user_ns:
+                val = self.shell.user_ns[match.group(1)]
+                if as_json:
+                    try:
+                        return json.dumps(val)
+                    except TypeError as e:
+                        return json.dumps(str(e))  # Make sure it's quoted, so it's valid JS
+                else:
+                    return str(val)
+        elif match.group(2) == 'jsdoc' and match.group(1) in self.js:
+            return "<script>%s</script>" % self.js[match.group(1)]
+        elif match.group(2) == 'cssdoc' and match.group(1) in self.css:
+            return "<style>%s</style>" % self.css[match.group(1)]
         
-        if match.group(1) not in self.shell.user_ns:
-            return match.group(0)
-
-        val = self.shell.user_ns[match.group(1)]
-        if match.group(2) == 'json':
-            try:
-                return json.dumps(val)
-            except TypeError as e:
-                return json.dumps(str(e))  # Make sure it's quoted, so it's valid JS
-
-        return str(val)
+        return match.group(0)
 
     @cell_magic
     def ihtml(self, line, cell):
