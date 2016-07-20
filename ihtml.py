@@ -1,3 +1,7 @@
+# Copyright 2016 The Data Incubator
+# ihtml is distributed under the terms of the BSD 3-Clause License
+# https://github.com/thedataincubator/ihtml
+
 from IPython.display import IFrame, display_javascript, display_html
 from IPython.core.magic import Magics, magics_class, cell_magic
 import base64
@@ -9,7 +13,7 @@ import json
 class IHtmlMagics(Magics):
 
     var_re = re.compile(r'{{\s*(\w+)\s*(?:\|\s*(\w+)\s*)?}}')
-    
+
     def __init__(self, shell):
         super(IHtmlMagics, self).__init__(shell)
         self.js = {}
@@ -31,7 +35,7 @@ class IHtmlMagics(Magics):
             return "<script>%s</script>" % self.js[match.group(1)]
         elif match.group(2) == 'cssdoc' and match.group(1) in self.css:
             return "<style>%s</style>" % self.css[match.group(1)]
-        
+
         return match.group(0)
 
     @cell_magic
@@ -39,7 +43,7 @@ class IHtmlMagics(Magics):
         height = int(line or 400)
         url = "data:text/html;base64," + base64.b64encode(self.var_re.sub(self.var_replace, cell))
         display_html(IFrame(url, "100%", height))
-    
+
     def save_doc(self, type_, name, value):
         name = name.strip()
         if name:
@@ -47,11 +51,11 @@ class IHtmlMagics(Magics):
         else:
             display_html("<div class='js-error'>Error: Must specify name for %s document" % type_
                          + " (<tt>%%%%%sdoc <i>name</i></tt>).</div>" % type_, raw=True)
-    
+
     @cell_magic
     def jsdoc(self, line, cell):
         self.save_doc('js', line, cell)
-    
+
     @cell_magic
     def cssdoc(self, line, cell):
         self.save_doc('css', line, cell)
