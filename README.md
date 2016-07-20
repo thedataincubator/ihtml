@@ -9,3 +9,7 @@ Simply download the file [ihtml.py](https://raw.githubusercontent.com/thedatainc
 ## Usage
 
 See the [README.ipynb](https://github.com/thedataincubator/ihtml/blob/master/README.ipynb) notebook for usage examples.  Note that the iframe output is not rendered correctly on Github; view it on your own notebook server to see it in action.
+
+## License
+
+ihtml is copyright 2016 The Data Incubator, released under the BSD 3-Clause license.  See the LICENSE file for details.  The source is available at https://github.com/thedataincubator/ihtml.
