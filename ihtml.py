@@ -26,9 +26,12 @@ class IHtmlMagics(Magics):
                 val = self.shell.user_ns[match.group(1)]
                 if as_json:
                     try:
-                        return json.dumps(val)
-                    except TypeError as e:
-                        return json.dumps(str(e))  # Make sure it's quoted, so it's valid JS
+                        return val.to_json()
+                    except AttributeError:
+                        try:
+                            return json.dumps(val)
+                        except TypeError as e:
+                            return json.dumps(str(e))  # Make sure it's quoted, so it's valid JS
                 else:
                     return str(val)
         elif match.group(2) == 'jsdoc' and match.group(1) in self.js:
