@@ -4,7 +4,10 @@ ihtml is a module for [IPython/Jupyter](https://ipython.org/) that allows for th
 
 ## Installation
 
-Simply download the file [ihtml.py](https://raw.githubusercontent.com/thedataincubator/ihtml/master/ihtml.py) from this repo and place it somewhere from which IPython will be able to import it.  Note that IPython adds `~/.ipython/` to the import paths.
+ihtml can be installed with pip:
+```
+pip install git+https://github.com/thedataincubator/ihtml.git@master
+```
 
 ## Usage
 
