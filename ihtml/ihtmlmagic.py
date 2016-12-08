@@ -2,7 +2,7 @@
 # ihtml is distributed under the terms of the BSD 3-Clause License
 # https://github.com/thedataincubator/ihtml
 
-from IPython.display import IFrame, display_javascript, display_html
+from IPython.display import IFrame, display_html
 from IPython.core.magic import Magics, magics_class, cell_magic
 import base64
 import re
@@ -62,21 +62,3 @@ class IHtmlMagics(Magics):
     @cell_magic
     def cssdoc(self, line, cell):
         self.save_doc('css', line, cell)
-
-
-ip = get_ipython()
-ip.register_magics(IHtmlMagics)
-display_javascript("""
-function add_highlight_mode(mode, pattern) {
-    var modes = IPython.CodeCell.config_defaults.highlight_modes;
-    var mode_name = 'magic_' + mode;
-    if (!modes[mode_name])
-        modes[mode_name] = {};
-    if (!modes[mode_name]['reg'])
-        modes[mode_name]['reg'] = [];
-    modes[mode_name]['reg'].push(pattern);
-}
-add_highlight_mode('html', /^%%ihtml/);
-add_highlight_mode('javascript', /^%%jsdoc/);
-add_highlight_mode('css', /^%%cssdoc/);
-""", raw=True)
