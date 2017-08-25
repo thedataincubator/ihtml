@@ -44,7 +44,7 @@ class IHtmlMagics(Magics):
     @cell_magic
     def ihtml(self, line, cell):
         height = int(line or 400)
-        url = "data:text/html;base64," + base64.b64encode(self.var_re.sub(self.var_replace, cell))
+        url = "data:text/html;base64," + base64.b64encode(self.var_re.sub(self.var_replace, cell).encode('utf-8')).decode('utf-8')
         display_html(IFrame(url, "100%", height))
 
     def save_doc(self, type_, name, value):
