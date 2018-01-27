@@ -9,7 +9,7 @@ from .ihtmlmagic import IHtmlMagics
 get_ipython().register_magics(IHtmlMagics)
 display_javascript("""
 function add_highlight_mode(mode, pattern) {
-    var modes = IPython.CodeCell.options_default.highlight_modes;
+    var modes = Jupyter.CodeCell.options_default.highlight_modes;
     var mode_name = 'magic_' + mode;
     if (!modes[mode_name])
         modes[mode_name] = {};
