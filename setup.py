@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='ihtml',
-    version='0.1.1',
+    version='0.1.2',
     description='iframe magic for Jupyter notebooks',
     long_description='iframe magic for Jupyter notebooks',
     author='Robert Schroll',
